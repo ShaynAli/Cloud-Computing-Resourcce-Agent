@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/ShaynAli/Cloud-Computing-Resourcce-Agent/issues"
   },
-  "homepage": "https://github.com/ShaynAli/Cloud-Computing-Resourcce-Agent#readme"
+  "homepage": "https://github.com/ShaynAli/Cloud-Computing-Resourcce-Agent#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
 }
