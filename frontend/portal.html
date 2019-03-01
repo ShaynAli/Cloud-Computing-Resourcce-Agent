@@ -23,7 +23,20 @@
     <body>
 
         <div id="vm-list" class="left">
-            list
+
+            <form action="/portal.js" method="get">
+                <input type="submit" value="new-vm">
+            </form>
+            <div id="total-vm-usage">$90.01</div>
+
+            <table id="vm-table">
+                <tr>
+                    <td>vm 1</td> <td>status</td> <td>config</td>
+                </tr>
+                <tr>
+                    <td>vm 2</td> <td>status</td> <td>config</td>
+                </tr>
+            </table>
         </div>
 
         <div id="vm-config" class="right">
