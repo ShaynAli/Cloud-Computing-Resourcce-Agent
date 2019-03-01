@@ -22,6 +22,29 @@
 
     <body>
 
+        <div id="vm-list" class="left">
+            list
+        </div>
+
+        <div id="vm-config" class="right">
+            
+            <form action="/portal.js" method="post">
+                <input type="submit" value="start">
+                <input type="submit" value="stop">
+                <input type="submit" value="delete">
+                <br>
+                <select>
+                    <option value="basic"></option>
+                    <option value="large"></option>
+                    <option value="ultra-large"></option>
+                </select>
+                <input type="submit" value="upgrade">
+                <br>
+                <div id="current-vm-usage">$13.37</div>
+            </form>
+        
+        </div>
+
     </body>
 
 </html>
