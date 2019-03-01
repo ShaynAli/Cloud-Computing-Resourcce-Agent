@@ -16,34 +16,81 @@
         <link rel="icon" type="image/png" sizes="196x196" href="favicon-196.ico">
 
         <link rel="stylesheet" type="text/css" href="style.css">
-        <script src="portal.js"></script>
+        <!-- <script src="portal.js" type="text/javascript"></script> -->
 
     </head>
 
     <body>
 
         <div id="vm-list" class="left">
-            list
+
+            <form action="" method="get">
+                <input type="submit" value="new-vm">
+            </form>
+            <div id="total-vm-usage">$90.01</div>
+
+            <table id="vm-table">
+                <tr>
+                    <td>id</td>
+                    <td>status</td>
+                    <td>configuration</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>status</td>
+                    <td>config</td>
+                    <td><button>select</button></td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>status</td>
+                    <td>config</td>
+                    <td><button>select</button></td>
+                </tr>
+            </table>
         </div>
 
         <div id="vm-config" class="right">
             
-            <form action="/portal.js" method="post">
-                <input type="submit" value="start">
-                <input type="submit" value="stop">
-                <input type="submit" value="delete">
+            <form id="vm-config-form" action="" onsubmit="select_vm()">  <!-- TODO: Fix -->
+                <input id="start-vm" type="submit" value="start" name="start">
+                <input id="stop-vm" type="submit" value="stop" name="stop">
+                <input id="submit-vm" type="submit" value="delete" name="delete">
                 <br>
                 <select>
-                    <option value="basic"></option>
-                    <option value="large"></option>
-                    <option value="ultra-large"></option>
+                    <option value="basic">basic</option>
+                    <option value="large">large</option>
+                    <option value="ultra-large">ultra-large</option>
                 </select>
-                <input type="submit" value="upgrade">
+                <input id="upgrade-vm" type="submit" value="upgrade" name="upgrade">
                 <br>
                 <div id="current-vm-usage">$13.37</div>
             </form>
         
         </div>
+
+        <script>
+            // Encapsulate VM state in and send in a JSON
+
+            function new_vm() {  }  // Send CCID in special message
+
+            function select_vm(id) {
+                console.log("Starting vm");
+            }
+
+            function start_vm(id) {  }
+
+            function stop_vm(id) {  }
+
+            function delete_vm(id) {  }
+
+            function upgrade_vm(id, level) {  }
+
+            function update_vm_price(id) {  }
+
+            function update_vm_total_price() {  }
+
+        </script>
 
     </body>
 
