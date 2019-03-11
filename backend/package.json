@@ -17,6 +17,12 @@
   },
   "homepage": "https://github.com/ShaynAli/Cloud-Computing-Resourcce-Agent#readme",
   "dependencies": {
-    "express": "^4.16.4"
-  }
+    "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.4",
+    "express": "^4.16.4",
+    "mongodb": "^3.1.13",
+    "mongoose": "^5.4.16",
+    "serve-index": "^1.9.1"
+  },
+  "devDependencies": {}
 }
