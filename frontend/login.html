@@ -21,14 +21,14 @@
     </head>
 
     <body>
-
-        <form action="/login.js" method="post">
+        <script src="login.js"></script>
+        <form id="login-form" action="/login.js" method="post">
             Username: <br>      
-            <input type="text" align="left" name="username"><br>
+            <input type="text" name="username" id="user" required><br>
             Password: <br>
-            <input type="text" align="left" name="password"><br><br> 
-            
-            <input type="submit" value="Login" style="width:148px">
+            <input type="password" name="password" id="pass" required><br><br> 
+
+            <button id="login-button" style="width:148px">Login</button>
         </form>
 
     </body>
