@@ -10,7 +10,8 @@ window.addEventListener("DOMContentLoaded", function() {
 
 function login(username, password, form) {
     if (username.toUpperCase() == "ADMIN" && password == "password") {
-        form.submit();
+        // form.submit();
+        window.location.href = "./portal.html";
         console.log("Logged in")
     } else {
         console.log("Error")
