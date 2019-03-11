@@ -6,3 +6,8 @@
     width: 50%;
     float: left;
 }
+
+#vm-table {
+    width: 100%;
+    table-layout: fixed;
+}
