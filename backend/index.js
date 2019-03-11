@@ -16,8 +16,7 @@ var path = require('path');
 //var conn = mongoose.createConnection("mongodb://localhost");
 
 // Set routes
-var loginRoutes  = require('../frontend/login');
-var portalRoutes = require('../frontend/portal');
+var portalRoutes = require('./app/routes/portal');
 
 app.use(function (request, response, next) {
     console.log('Time: ' + Date.now());
@@ -31,7 +30,6 @@ app.get('/', function(req, res) {
 app.get('/portal', function(req, res) {
     res.sendFile(path.join(__dirname + '/../frontend/portal.html'));
 });
-
 
 
 // Configure app to use Body Parser
