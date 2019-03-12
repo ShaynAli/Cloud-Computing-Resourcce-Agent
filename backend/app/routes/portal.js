@@ -34,108 +34,179 @@ const cors = require('cors');
 router.route('/createVM')
     .post(function(req, res) {
         // Initalize new VM for the user
-    });
-
-router.route('/startVM')
-    .post(function(req, res) {
-        // Start running the selected vm
+        
         var data = new vm();
-
-        data.userId = req.body.userId;
-        data.config = "basic";
-        data.status = "stopped";
-        data.timeOfLastEvent = "";
+        data.CC_ID = "1";
+        data.vmConfig = "basic";
+        data.vmStatus = "stopped";
+        data.event = [];
         data.totalCharges = "0";
         data.totalUsage = "0";
-        data.event = [];
+        
+        data.save(function(err, newVM){
+            if(err){
+                console.log(err);       //handling errror
+                throw err;
+            }else {
+                console.log("New VM with ID " + newVM._id + "has been created!");
+                res.json({VM: newVM._id});      //creates new VM and sends its ID to client
+            }
+        });
+        
+    });
 
+router.route('/startVM/:_id')
+    .post(function(req, res) {
+        // Start running the selected vm
+        
+        vm.findById(req.params._id, function(err, vm) {
+            if(err) {
+                res.send(err);
+            }else {
+                eventOccurred(vm, "start");
+                
+                console.log("VM "+vm._id+" has been started!");
+                res.json({VMStatus: vm.vmStatus});
+            }
+        });
     });
     
-    // .get(function(req, res) {
-    //     vm.get(req.query).then(function(response) {
-    //         res.json({vm: response});
-    //     }, function(err) {
-    //         res.send(err);
-    //     });
-    // })
-    
-    // .put(function(req, res) {
-    //     var updatedVM = req.body.updatedVM;
-    //     vm.update(updatedVM).then(function(response) {
-    //         res.json({vm: response});
-    //     }, function(err) {
-    //         res.send(err);
-    //     });
-    // });
-    
-router.route('/upgradeVM/:VM_ID')
-    
-    .put(function(req, res){
+router.route('/stopVM/:_id')
+    .post(function(req, res) {
         
-      //  var data = new vm();
-        
-    //    vm.find();
-        
+        vm.findById(req.params._id , function(err, VM) {
+            if (err) {
+                res.send(err);
+            }else {
+                
+                var vmBeforeUpdate = new vm();
+                vmBeforeUpdate._id = VM._id;
+			    vmBeforeUpdate.CC_ID = VM.CC_ID;
+			    vmBeforeUpdate.vmConfig = VM.vmConfig;
+			    vmBeforeUpdate.vmStatus = VM.vmStatus;
+			    vmBeforeUpdate.event = VM.event;
+			    vmBeforeUpdate.totalCharges = VM.totalCharges;
+			    vmBeforeUpdate.totalUsage = VM.totalUsage;
+			    
+			    var updatedVM = eventOccurred(vmBeforeUpdate,"stop");
+			    
+			    VM._id = updatedVM._id;
+			    VM.CC_ID = updatedVM.CC_ID;
+			    VM.vmConfig = updatedVM.vmConfig;
+			    VM.vmStatus = updatedVM.vmStatus;
+			    VM.event = updatedVM.event;
+			    VM.totalCharges = updatedVM.totalCharges;
+			    VM.totalUsage = updatedVM.totalUsage;
+                
+                VM.save(function(err) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    else {
+                        console.log("VM "+vm._id+" has been stopped!");
+                        res.json({VM: vm.vmStatus, VMTotalCharge: vm.totalCharges, VMTotalUsage: vm.totalUsage});
+                    }
+                });
+                
+            }
+        });
     });
     
-router.route('/downgradeVM/:VM_ID')
+    
+router.route('/upgradeVM/:_id')
+    
+    .post(function(req, res){
+        
+      vm.findById(req.params._id, function(err, VM) {
 
-    .put(function(req, res){
+			if (err){
+				console.log(err);
+			} else {
+			    
+			    var vmBeforeUpdate = new vm();
+			    vmBeforeUpdate._id = VM._id;
+			    vmBeforeUpdate.CC_ID = VM.CC_ID;
+			    vmBeforeUpdate.vmConfig = VM.vmConfig;
+			    vmBeforeUpdate.vmStatus = VM.vmStatus;
+			    vmBeforeUpdate.event = VM.event;
+			    vmBeforeUpdate.totalCharges = VM.totalCharges;
+			    vmBeforeUpdate.totalUsage = VM.totalUsage;
+			    
+			    var updatedVM = eventOccurred(vmBeforeUpdate,"upgrade");
+			    
+			    VM._id = updatedVM._id;
+			    VM.CC_ID = updatedVM.CC_ID;
+			    VM.vmConfig = updatedVM.vmConfig;
+			    VM.vmStatus = updatedVM.vmStatus;
+			    VM.event = updatedVM.event;
+			    VM.totalCharges = updatedVM.totalCharges;
+			    VM.totalUsage = updatedVM.totalUsage;
+			    
+			    
+    			VM.save(function(err) {
+    				if (err){
+    					console.log(err);
+    					throw err;
+    				}
+                    else{
+    				    res.json({VMConfig: VM.vmConfig});
+                    }
+    			});
+    			
+            }
+        
+		});
         
     });
     
-    
-    function createVM() {
-        
-    }
-    
-    
-    function upgradeVM(vm){
-        
-        switch(vm.config){
-            
-            case "basic":
-                vm.config = "large";
-                break;
+router.route('/downgradeVM/:_id')
+
+    .post(function(req, res){
+        vm.findById(req.params._id, function(err, VM) {
+            if (err) {
+                res.send(err);
+            }else {
                 
-            case "large":
-                vm.config = "ultra-large";
-                break;
+                var vmBeforeUpdate = new vm();
+                vmBeforeUpdate._id = VM._id
+			    vmBeforeUpdate.CC_ID = VM.CC_ID;
+			    vmBeforeUpdate.vmConfig = VM.vmConfig;
+			    vmBeforeUpdate.vmStatus = VM.vmStatus;
+			    vmBeforeUpdate.event = VM.event;
+			    vmBeforeUpdate.totalCharges = VM.totalCharges;
+			    vmBeforeUpdate.totalUsage = VM.totalUsage;
+			    
+			    var updatedVM = eventOccurred(vmBeforeUpdate,"downgrade");
+			    
+			    VM._id = updatedVM._id;
+			    VM.CC_ID = updatedVM.CC_ID;
+			    VM.vmConfig = updatedVM.vmConfig;
+			    VM.vmStatus = updatedVM.vmStatus;
+			    VM.event = updatedVM.event;
+			    VM.totalCharges = updatedVM.totalCharges;
+			    VM.totalUsage = updatedVM.totalUsage;
                 
-            default:
-            
-        }
-        return vm;
-    }
+                VM.save(function(err) {
+                    if(err) {
+                        console.log(err);
+                        throw err;
+                    }
+                    else {
+                        res.json({VMConfig: VM.vmConfig});
+                    }
+                });
+            }
+        });
+    });
     
-    function startVM(vm){
-        
-        vm.status = "running";
-        var price = "";
-        if (vm.config == "basic") {
-            price = "0.05";
-        }
-        else if (vm.config == "large") {
-            price = "0.10";
-        }
-        else {
-            price = "0.15"
-        }
-        
-        var event = new event(Date.now().toString(), price, "start");
-        vm.event.push(event);
-        //should probably implement something here that records this event (current time), need to make an event class or something
-        //  similar
-        
-        return vm;
-    }
     
-    function stopVM(vm){
+    
+    function calculateTimeUsage(vm){
+        var eventArraySize = vm.event.length;
+        var timeOfLastEvent = parseInt(vm.event[eventArraySize - 1].time);
+        var timeOfFirstEvent = parseInt(vm.event[0].time);
         
-        vm.status = "stopped";
-        //same as above
-        
-        return vm;
+        return (timeOfLastEvent - timeOfFirstEvent)*60000; //returns the time elapsed in minutes
     }
     
     function eventOccurred(vm, desiredStatus){
@@ -145,39 +216,46 @@ router.route('/downgradeVM/:VM_ID')
         
         var price = " ";
         var time = Date.now().toString();
-        switch(vm.status){
-            
+        console.log(vm.vmStatus);
+        switch(vm.vmStatus){
             case "stopped":
-                
+                if (vm.event.length == 0 && desiredStatus == "start") {
+                    vm.vmStatus = "started";
+                    price = "0.05";
+                    var eventToAdd = new Event(time, price, desiredStatus);
+                    vm.event.push(eventToAdd);
+                }
                 break;
                 
             case "started":
-                var lastEvent = vm.event
+                vm.totalCharges = updateTotalCharges(vm);
                 if(desiredStatus == "upgrade"){
-                    if(vm.config == "basic"){
-                        vm.config = "large";
+                    if(vm.vmConfig == "basic"){
+                        vm.vmConfig = "large";
                         price = "0.10";
-                    } else if(vm.config == "large"){
-                        vm.config = "ultra-large";
+                    } else if(vm.vmConfig == "large"){
+                        vm.vmConfig = "ultra-large";
                         price = "0.15";
                     }
-                
+                console.log(vm.vmConfig);
                 
                 } else if(desiredStatus == "downgrade"){
                     
-                    if(vm.config == "ultra-large"){
-                        vm.config = "large";
+                    if(vm.vmConfig == "ultra-large"){
+                        vm.vmConfig = "large";
                         price = "0.10";
-                    } else if(vm.config == "large"){
-                        vm.config = "basic";
+                    } else if(vm.vmConfig == "large"){
+                        vm.vmConfig = "basic";
                         price = "0.05"
                     }
                     
-                } else if(desiredStatus == "stopped"){
-                    
+                } else if(desiredStatus == "stop"){
+                    vm.vmStatus = "stopped";
+                    price = "0";
+                    vm.totalUsage = calculateTimeUsage(vm);
                 }
                 
-                var eventToAdd = Event(time, price, desiredStatus);
+                var eventToAdd = new Event(time, price, desiredStatus);
                 vm.event.push(eventToAdd);
                 
                 break;
@@ -187,21 +265,19 @@ router.route('/downgradeVM/:VM_ID')
         return vm;
     }
     
-    function downgradeVM(vm){
+    
+    
+    function updateTotalCharges(vm) {
+        var currentTotalCharges = parseFloat(vm.totalCharges)
+        var timeNow = parseInt(Date.now());
+        var lastEvent = vm.event[vm.event.length()-1];
+        var timeSinceLastEvent = (timeNow - parseInt(lastEvent.time))/60000;
+        var price = parseFloat(lastEvent.price);
         
-        switch(vm.config){
-            
-            case "large":
-                break;
-                
-            case "ultra-large":
-                break;
-                
-            default:
-            
-        }
-        return vm;
+        var totalChargeSinceLastEvent = price * timeSinceLastEvent;
+        var totalCharges = (currentTotalCharges + totalChargeSinceLastEvent);
         
+        return totalCharges;
     }
 
 // Need to export at end of file
