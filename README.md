@@ -1,6 +1,6 @@
-# Cloud-Computing-Resourcce-Agent
+# Cloud-Computing-Resource-Agent
 
-Cloud Computing Resourcce Agent
+Cloud Computing Resource Agent
 
 
 ## TO RUN SERVER

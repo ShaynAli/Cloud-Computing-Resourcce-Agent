@@ -1,21 +1,21 @@
 {
-  "name": "cloud-computing-resourcce-agent",
+  "name": "cloud-computing-resource-agent",
   "version": "1.0.0",
-  "description": "Cloud Computing Resourcce Agent",
+  "description": "Cloud Computing Resource Agent",
   "main": "index.js",
   "scripts": {
     "test": "test"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ShaynAli/Cloud-Computing-Resourcce-Agent.git"
+    "url": "git+https://github.com/ShaynAli/Cloud-Computing-Resource-Agent.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ShaynAli/Cloud-Computing-Resourcce-Agent/issues"
+    "url": "https://github.com/ShaynAli/Cloud-Computing-Resource-Agent/issues"
   },
-  "homepage": "https://github.com/ShaynAli/Cloud-Computing-Resourcce-Agent#readme",
+  "homepage": "https://github.com/ShaynAli/Cloud-Computing-Resource-Agent#readme",
   "dependencies": {
     "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.4",
