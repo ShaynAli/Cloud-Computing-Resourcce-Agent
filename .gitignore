@@ -42,7 +42,6 @@ backend/package-lock.json
 
 # Data
 backend/app/data/
-!backend/app/data/.gitkeep
 
 # TypeScript v1 declaration files
 typings/
@@ -91,3 +90,5 @@ typings/
 .0
 .ns
 
+# Gitkeep
+!**.gitkeep

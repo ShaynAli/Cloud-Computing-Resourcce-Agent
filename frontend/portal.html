@@ -26,16 +26,19 @@
         <meta name="description" content="admin portal">
         <meta name="author" content="Shayaan, Connor, Brandon, Willian">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+<<<<<<< HEAD
+=======
+
+        <link rel="stylesheet" href="style.css">
+>>>>>>> 12cef8a61bc836b6845f44a954513b46e4713342
         <script type="text/javascript" src="portal.js"></script>
     </head>
 
-    <body>
+    <body onload="init()">
 
         <div id="vm-list" class="left">
 
-            <form onsubmit="new_vm()">
-                <input type="submit" value="new-vm">
-            </form>
+            <button id="new-vm">new-vm</button>
             <div id="total-vm-usage">$90.01</div>
 
             <form id="vm-option-form">
@@ -46,16 +49,20 @@
                     <td>configuration</td>
                 </tr>
                 <tr>
-                    <td>2</td>
-                    <td>status</td>
-                    <td>config</td>
-                    <td><input id="select-vm1" type="submit" value="select"></input></td>
-                </tr>
-                <tr>
                     <td>1</td>
                     <td>status</td>
                     <td>config</td>
-                    <td><button>select</button></td>
+                    <td>
+                        <button id="select-vm-1">select</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>status</td>
+                    <td>config</td>
+                    <td>
+                        <button id="select-vm-2">select</button>
+                    </td>
                 </tr>
             </table>
         </form>
@@ -63,16 +70,14 @@
 
         <div id="vm-config" class="right">
             
-            <form id="vm-config-form" onsubmit="">  <!-- TODO: Fix -->
-                <input id="start-vm" type="submit" value="start" name="start">
-                <input id="stop-vm" type="submit" value="stop" name="stop">
-                <input id="delete-vm" type="submit" value="delete" name="delete">
-                <br>
-                <input id="upgrade-vm" type="submit" value="upgrade" name="upgrade">
-                <input id="downgrade-vm" type="submit" value="downgrade" name="downgrade">
-                <br>
-                <div id="current-vm-usage">$13.37</div> 
-            </form>
+            <button id="start-vm">start</button>
+            <button id="stop-vm">stop</button>
+            <button id="delete-vm">delete</button>
+            <br>
+            <button id="upgrade-vm">upgrade</button>
+            <button id="downgrade-vm">downgrade</button>
+            <br>
+            <div id="current-vm-usage">$13.37</div>
         
         </div>
 
