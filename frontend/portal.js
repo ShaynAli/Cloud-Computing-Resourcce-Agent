@@ -36,45 +36,53 @@ function init() {
 // TODO: Make requests
 
 function new_vm() {  
+    console.log("creating vm");
     post("/createVM");
 }
 
 function select_vm(id) { 
+    console.log("selecting vm " + id);
     document.getElementById("vm-config").style.visibility = "visible";
  }
 
 function start_vm(id) {
+    console.log("starting vm " + id);
     post("/startVM/" + id);
-    console.log("Start");
 }
 
 function stop_vm(id) {
+    console.log("stopping vm" + id);
     post("/stopVM/" + id);
  }
 
 function delete_vm(id) {
+    console.log("deleting vm" + id);
     post("/deleteVM/" + id);
 }
 
 function upgrade_vm(id) {
+    console.log("upgrading vm" + id);
     post("/upgradeVM/" + id);
 }
 
 function downgrade_vm(id) {
+    console.log("downgrading vm" + id);
     post("/downgradeVM/" + id);
 }
 
 function update_vm_price(id) {
+    console.log("updating price for vm " + id);
     // TODO
 }
 
-function update_vm_total_price(id) {  }
+function update_vm_total_price() {
+    console.log("downgrading total price");
+    // TODO
+}
 
 function post(path, params, method) {
-    method = method || "post"; // Set method to post by default if not specified.
-
-    // The rest of this code assumes you are not using a library.
-    // It can be made less wordy if you use one.
+    method = method || "post";
+    
     var form = document.createElement("form");
     form.setAttribute("method", method);
     form.setAttribute("action", path);
