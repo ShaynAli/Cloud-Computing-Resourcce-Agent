@@ -35,8 +35,14 @@ build/Release
 # Dependency directories
 node_modules/
 jspm_packages/
+
+# Package locks
 package-lock.json
 backend/package-lock.json
+
+# Data
+backend/app/data/
+!backend/app/data/mongod.lock
 
 # TypeScript v1 declaration files
 typings/
