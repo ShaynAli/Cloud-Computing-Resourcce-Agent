@@ -3,7 +3,11 @@ var current_vm = -1;
 function init() {
 
     var form = document.getElementById("vm-config-form");
-    console.log("Test")
+
+    document.getElementById("new-vm").addEventListener("click", function() {
+        new_vm();
+    });
+
     document.getElementById("start-vm").addEventListener("click", function() {
         if (current_vm === -1) { 
             return;
@@ -46,11 +50,12 @@ function init() {
         downgrade_vm(current_vm);
     });
 
-    document.getElementById("select-vm1").addEventListener("click", function() {
-        if (current_vm === -1) { 
-            return;
-        }
-        select_vm(current_vm);
+    document.getElementById("select-vm-1").addEventListener("click", function() {
+        select_vm(1);
+    });
+
+    document.getElementById("select-vm-2").addEventListener("click", function() {
+        select_vm(2);
     });
 }
 
@@ -103,23 +108,40 @@ function update_vm_total_price() {
 }
 
 function post(path, params, method) {
-    method = method || "post";
 
-    var form = document.createElement("form");
-    form.setAttribute("method", method);
-    form.setAttribute("action", path);
+    var url = "https://cloud-computing-backend-gyoung52.c9users.io:8080" + path;
 
-    for(var key in params) {
-        if(params.hasOwnProperty(key)) {
-            var hiddenField = document.createElement("input");
-            hiddenField.setAttribute("type", "hidden");
-            hiddenField.setAttribute("name", key);
-            hiddenField.setAttribute("value", params[key]);
-
-            form.appendChild(hiddenField);
+    fetch(url, {
+        method: "post",
+        mode: "no-cors",
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json"
         }
-    }
+    })
+    .then(function(response) {
+        var json_out = response.json();
+        console.log(JSON.stringify(json_out));
+        return json_out;
+    });
 
-    document.body.appendChild(form);
-    form.submit();
+    // method = method || "post";
+
+    // var form = document.createElement("form");
+    // form.setAttribute("method", method);
+    // form.setAttribute("action", path);
+
+    // for(var key in params) {
+    //     if(params.hasOwnProperty(key)) {
+    //         var hiddenField = document.createElement("input");
+    //         hiddenField.setAttribute("type", "hidden");
+    //         hiddenField.setAttribute("name", key);
+    //         hiddenField.setAttribute("value", params[key]);
+
+    //         form.appendChild(hiddenField);
+    //     }
+    // }
+
+    // document.body.appendChild(form);
+    // form.submit();
 }
