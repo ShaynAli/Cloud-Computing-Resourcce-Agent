@@ -30,7 +30,22 @@ const cors = require('cors');
     router.use(bodyParser.json({ limit: '20mb' }));
     router.use(bodyParser.urlencoded({ limit: '20mb', extended: true }));
     router.use(cors());
-    
+
+router.route('/getAllVM')
+    .get(function(req, res) {
+        vm.find(function(err, VMs) {
+            if (err){
+                res.send(err);
+                console.log(err);
+            }else{
+                res.json({vms: VMs});
+            }
+            
+            
+            
+        });
+    });
+
 router.route('/createVM')
     .post(function(req, res) {
         // Initalize new VM for the user
@@ -59,14 +74,38 @@ router.route('/startVM/:_id')
     .post(function(req, res) {
         // Start running the selected vm
         
-        vm.findById(req.params._id, function(err, vm) {
+        vm.findById(req.params._id, function(err, VM) {
             if(err) {
                 res.send(err);
             }else {
-                eventOccurred(vm, "start");
+                var vmBeforeUpdate = new vm();
+                vmBeforeUpdate._id = VM._id;
+			    vmBeforeUpdate.CC_ID = VM.CC_ID;
+			    vmBeforeUpdate.vmConfig = VM.vmConfig;
+			    vmBeforeUpdate.vmStatus = VM.vmStatus;
+			    vmBeforeUpdate.event = VM.event;
+			    vmBeforeUpdate.totalCharges = VM.totalCharges;
+			    vmBeforeUpdate.totalUsage = VM.totalUsage;
+			    
+                var updatedVM = eventOccurred(vmBeforeUpdate, "start");
                 
-                console.log("VM "+vm._id+" has been started!");
-                res.json({VMStatus: vm.vmStatus});
+                VM._id = updatedVM._id;
+			    VM.CC_ID = updatedVM.CC_ID;
+			    VM.vmConfig = updatedVM.vmConfig;
+			    VM.vmStatus = updatedVM.vmStatus;
+			    VM.event = updatedVM.event;
+			    VM.totalCharges = updatedVM.totalCharges;
+			    VM.totalUsage = updatedVM.totalUsage;
+                
+                VM.save(function(err) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    else {
+                        console.log("VM "+VM._id+" has been started!");
+                        res.json({vm: VM.vmStatus});
+                    }
+                });
             }
         });
     });
@@ -103,8 +142,8 @@ router.route('/stopVM/:_id')
                         console.log(err);
                     }
                     else {
-                        console.log("VM "+vm._id+" has been stopped!");
-                        res.json({VM: vm.vmStatus, VMTotalCharge: vm.totalCharges, VMTotalUsage: vm.totalUsage});
+                        console.log("VM "+VM._id+" has been stopped!");
+                        res.json({vm: VM.vmStatus, VMTotalCharge: VM.totalCharges, VMTotalUsage: VM.totalUsage});
                     }
                 });
                 
@@ -131,6 +170,7 @@ router.route('/upgradeVM/:_id')
 			    vmBeforeUpdate.event = VM.event;
 			    vmBeforeUpdate.totalCharges = VM.totalCharges;
 			    vmBeforeUpdate.totalUsage = VM.totalUsage;
+			    console.log(vmBeforeUpdate.vmStatus+" Status before upgrade")
 			    
 			    var updatedVM = eventOccurred(vmBeforeUpdate,"upgrade");
 			    
@@ -141,6 +181,7 @@ router.route('/upgradeVM/:_id')
 			    VM.event = updatedVM.event;
 			    VM.totalCharges = updatedVM.totalCharges;
 			    VM.totalUsage = updatedVM.totalUsage;
+			    console.log(updatedVM.vmStatus+" Status after upgrade")
 			    
 			    
     			VM.save(function(err) {
@@ -206,7 +247,7 @@ router.route('/downgradeVM/:_id')
         var timeOfLastEvent = parseInt(vm.event[eventArraySize - 1].time);
         var timeOfFirstEvent = parseInt(vm.event[0].time);
         
-        return (timeOfLastEvent - timeOfFirstEvent)*60000; //returns the time elapsed in minutes
+        return (timeOfLastEvent - timeOfFirstEvent)/60000; //returns the time elapsed in minutes
     }
     
     function eventOccurred(vm, desiredStatus){
@@ -270,12 +311,12 @@ router.route('/downgradeVM/:_id')
     function updateTotalCharges(vm) {
         var currentTotalCharges = parseFloat(vm.totalCharges)
         var timeNow = parseInt(Date.now());
-        var lastEvent = vm.event[vm.event.length()-1];
+        var lastEvent = vm.event[vm.event.length-1];
         var timeSinceLastEvent = (timeNow - parseInt(lastEvent.time))/60000;
         var price = parseFloat(lastEvent.price);
         
         var totalChargeSinceLastEvent = price * timeSinceLastEvent;
-        var totalCharges = (currentTotalCharges + totalChargeSinceLastEvent);
+        var totalCharges = (currentTotalCharges + totalChargeSinceLastEvent).toFixed(2);
         
         return totalCharges;
     }
