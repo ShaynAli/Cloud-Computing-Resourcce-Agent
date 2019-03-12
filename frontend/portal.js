@@ -27,6 +27,10 @@ function init() {
     document.getElementById("downgrade-vm").addEventListener("click", function() {
         downgrade_vm(current_vm);
     });
+
+    document.getElementById("select-vm1").addEventListener("click", function() {
+        select_vm(current_vm);
+    });
 }
 
 // TODO: Make requests
@@ -35,26 +39,29 @@ function new_vm() {
     post("/createVM");
 }
 
-function select_vm(id) {  }
+function select_vm(id) { 
+    document.getElementById("vm-config").style.visibility = "visible";
+ }
 
 function start_vm(id) {
-    post("/startVM");
+    post("/startVM/" + id);
+    console.log("Start");
 }
 
 function stop_vm(id) {
-    post("/stopVM");
+    post("/stopVM/" + id);
  }
 
 function delete_vm(id) {
-    post("/deleteVM");
+    post("/deleteVM/" + id);
 }
 
 function upgrade_vm(id) {
-    post("/upgradeVM");
+    post("/upgradeVM/" + id);
 }
 
 function downgrade_vm(id) {
-    post("/downgradeVM");
+    post("/downgradeVM/" + id);
 }
 
 function update_vm_price(id) {
