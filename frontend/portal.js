@@ -32,24 +32,34 @@ function init() {
 // TODO: Make requests
 
 function new_vm() {  
-    post('/createVM');
+    post("/createVM");
 }
 
 function select_vm(id) {  }
 
-function start_vm(id) {  }
+function start_vm(id) {
+    post("/startVM");
+}
 
-function stop_vm(id) { 
-    // TODO: Get requests
+function stop_vm(id) {
+    post("/stopVM");
  }
 
-function delete_vm(id) {  }
+function delete_vm(id) {
+    post("/deleteVM");
+}
 
-function upgrade_vm(id) {  }
+function upgrade_vm(id) {
+    post("/upgradeVM");
+}
 
-function downgrade_vm(id) {  }
+function downgrade_vm(id) {
+    post("/downgradeVM");
+}
 
-function update_vm_price(id) {  }
+function update_vm_price(id) {
+    // TODO
+}
 
 function update_vm_total_price(id) {  }
 
