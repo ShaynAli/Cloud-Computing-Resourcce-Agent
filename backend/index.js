@@ -13,13 +13,11 @@ var port = process.env.PORT || 8080;        // set our port
 //var router = express.Router();
 const serveIndex = require('serve-index');
 var path = require('path');
-var portal = require('./routes/portal');
 
 //var conn = mongoose.createConnection("mongodb://localhost");
 
 // Set routes
-var loginRoutes  = require('../frontend/login.html');
-var portalRoutes = require('../frontend/portal.html');
+var portal = require('./app/routes/portal');
 
 app.use(function (request, response, next) {
     console.log('Time: ' + Date.now());
