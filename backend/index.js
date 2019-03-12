@@ -32,6 +32,14 @@ app.get('/portal', function(req, res) {
     res.sendFile(path.join(__dirname + '/../frontend/portal.html'));
 });
 
+app.get('/login.js', function(req, res) {
+    res.sendFile(path.join(__dirname + '/../frontend/login.js'));
+});
+
+app.get('/portal.js', function(req, res) {
+    res.sendFile(path.join(__dirname + '/../frontend/portal.js'));
+});
+
 app.use('/portal', portal);         //sends the portal route
 
 

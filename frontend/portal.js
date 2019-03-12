@@ -3,7 +3,7 @@ var current_vm;
 function init() {
 
     var form = document.getElementById("vm-config-form");
-
+    console.log("Test")
     document.getElementById("start-vm").addEventListener("click", function() {
         start_vm(current_vm);
     });
