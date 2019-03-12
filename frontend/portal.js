@@ -109,7 +109,7 @@ function update_vm_total_price() {
 
 function post(path, params, method) {
 
-    var url = "https://cloud-computing-backend-gyoung52.c9users.io:8080" + path;
+    var url = "https://cloud-computing-backend-gyoung52.c9users.io:3000" + path;
 
     fetch(url, {
         method: "post",
