@@ -42,7 +42,7 @@ backend/package-lock.json
 
 # Data
 backend/app/data/
-!backend/app/data/mongod.lock
+!backend/app/data/.gitkeep
 
 # TypeScript v1 declaration files
 typings/
@@ -90,3 +90,4 @@ typings/
 # DB files
 .0
 .ns
+
