@@ -110,16 +110,13 @@ function post(path, params, method) {
     var url = "https://cloud-computing-backend-gyoung52.c9users.io:8080/portal" + path;
 
     fetch(url, {
-        method: "post",
-        mode: "no-cors",
-        headers: {
+        method: "POST",
+        headers: new Headers({
             "Accept": "application/json",
             "Content-Type": "application/json"
-        }
+        }) 
     })
-    .then(function(response) {
-        var json_out = response.json();
-        console.log(JSON.stringify(json_out));
-        return json_out;
-    });
+    .then(response => response.json()
+    .then(response => console.log(response))
+    );
 }
