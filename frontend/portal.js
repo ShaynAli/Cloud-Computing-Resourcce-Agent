@@ -50,6 +50,8 @@ function init() {
         downgrade_vm(current_vm);
     });
 
+    // TODO: Generate blow dynamically
+
     document.getElementById("select-vm-1").addEventListener("click", function() {
         select_vm(1);
     });
@@ -57,11 +59,15 @@ function init() {
     document.getElementById("select-vm-2").addEventListener("click", function() {
         select_vm(2);
     });
+    
+    // TODO: Loop to get VM cost update
 }
 
 function new_vm() {  
     console.log("creating vm");
-    post("/createVM");
+    post("/createVM/").then(function (response) {
+        console.log("Got VM id: " + response["VM"])
+    });
 }
 
 function select_vm(id) { 
@@ -109,14 +115,12 @@ function post(path, params, method) {
 
     var url = "https://cloud-computing-backend-gyoung52.c9users.io:8080/portal" + path;
 
-    fetch(url, {
+    return fetch(url, {
         method: "POST",
         headers: new Headers({
             "Accept": "application/json",
             "Content-Type": "application/json"
         }) 
     })
-    .then(response => response.json()
-    .then(response => console.log(response))
-    );
+    .then(response => response.json());
 }
