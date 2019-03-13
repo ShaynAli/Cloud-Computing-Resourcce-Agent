@@ -48,16 +48,6 @@ function init() {
         }
         downgrade_vm(current_vm);
     });
-
-    // TODO: Generate blow dynamically
-
-    document.getElementById("select-vm-1").addEventListener("click", function() {
-        select_vm(1);
-    });
-
-    document.getElementById("select-vm-2").addEventListener("click", function() {
-        select_vm(2);
-    });
     
     // TODO: Loop to get VM cost update
 }
