@@ -8,6 +8,7 @@ function init() {
     vm_config = document.getElementById("vm-config");
 
     document.getElementById("stop-vm").disabled = true;
+    vm_config.style.visibility = "hidden";
 
     document.getElementById("new-vm").addEventListener("click", function() {
         new_vm();
@@ -70,7 +71,7 @@ function new_vm() {
 
 function select_vm(id) { 
     console.log("selecting vm " + id);
-    document.getElementById("vm-config").style.visibility = "visible";
+    vm_config.style.visibility = "visible";
     current_vm = id;
  }
 
@@ -86,10 +87,13 @@ function stop_vm(id) {
     post("/stopVM/" + id);
     document.getElementById("start-vm").disabled = true;
     document.getElementById("stop-vm").disabled = true;
+    document.getElementById("upgrade-vm").disabled = true;
+    document.getElementById("downgrade-vm").disabled = true;
  }
 
 function delete_vm(id) {
     console.log("deleting vm" + id);
+    document.getElementById("vm-" + id).remove();
     // Delete from table
 }
 
