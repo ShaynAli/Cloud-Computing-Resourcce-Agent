@@ -6,6 +6,8 @@ function init() {
     vm_table = document.getElementById("vm-table");
     vm_list = document.getElementById("vm-list");
     vm_config = document.getElementById("vm-config");
+    current_usage = document.getElementById("current-vm-usage");
+    total_usage = document.getElementById("total-vm-usage");
 
     document.getElementById("stop-vm").disabled = true;
     vm_config.style.visibility = "hidden";
@@ -94,7 +96,6 @@ function stop_vm(id) {
 function delete_vm(id) {
     console.log("deleting vm" + id);
     document.getElementById("vm-" + id).remove();
-    // Delete from table
 }
 
 function upgrade_vm(id) {
