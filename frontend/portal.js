@@ -80,12 +80,13 @@ function new_vm() {
     });
 }
 
-function select_vm(id) { 
+function select_vm(id) {
     console.log("selecting vm " + id);
+    vm_config.style.visibility = "visible";
     current_vm = id;
  }
 
-function start_vm(id) { 
+function start_vm(id) {
     console.log("starting vm " + id);
     post("/startVM/" + id);
     document.getElementById("start-vm").disabled = true;
