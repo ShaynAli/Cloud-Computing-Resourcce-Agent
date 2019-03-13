@@ -66,17 +66,38 @@ function init() {
     // TODO: Loop to get VM cost update
 }
 
+function string_to_html(html_string) {
+    var template = document.createElement("template");
+    template.innerHTML = html_string.trim();
+    return template.content.cloneNode(true);
+}
+
 function new_vm() {  
     console.log("creating vm");
     post("/createVM/").then(function (response) {
-        console.log("Got VM id: " + response["VM"])
+        var vm_id = response["VM"];
+        console.log("Got VM id: " + vm_id)
+        vm_table.appendChild(string_to_html(`
+            <tr id="vm-` + vm_id + `">\n
+                <td>` + vm_id + `</td>\n
+                <td></td>\n
+                <td>status</td>\n
+                <td>config</td>\n
+                <td>\n
+                    <button id="select-vm-` + vm_id + `">select</button>\n
+                </td>\n
+            </tr>
+        `));
+        document.getElementById("select-vm-" + vm_id).addEventListener("click", function() {
+            select_vm(vm_id);
+        })
     });
 }
 
 function select_vm(id) { 
     console.log("selecting vm " + id);
-    document.getElementById("vm-config").style.visibility = "visible";
     current_vm = id;
+    document.getElementById("vm-config").style.visibility = "visible";
  }
 
 function start_vm(id) {
