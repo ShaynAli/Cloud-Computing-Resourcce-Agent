@@ -79,6 +79,8 @@ function select_vm(id) {
 function start_vm(id) {
     console.log("starting vm " + id);
     post("/startVM/" + id);
+    document.getElementById("start-vm").disabled = "true";
+    document.getElementById("stop-vm").disabled = "false";
 }
 
 function stop_vm(id) {
