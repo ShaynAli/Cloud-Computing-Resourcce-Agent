@@ -1,8 +1,11 @@
 var current_vm = -1;
+var vm_table, vm_list, vm_config;
 
 function init() {
 
-    var form = document.getElementById("vm-config-form");
+    vm_table = document.getElementById("vm-table");
+    vm_list = document.getElementById("vm-list");
+    vm_config = document.getElementById("vm-config");
 
     document.getElementById("new-vm").addEventListener("click", function() {
         new_vm();
