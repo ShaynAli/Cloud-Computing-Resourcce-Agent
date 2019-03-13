@@ -7,6 +7,8 @@ function init() {
     vm_list = document.getElementById("vm-list");
     vm_config = document.getElementById("vm-config");
 
+    document.getElementById("stop-vm").disabled = true;
+
     document.getElementById("new-vm").addEventListener("click", function() {
         new_vm();
     });
@@ -30,13 +32,6 @@ function init() {
             return;
         }
         delete_vm(current_vm);
-    });
-
-    document.getElementById("stop-vm").addEventListener("click", function() {
-        if (current_vm === -1) { 
-            return;
-        }
-        stop_vm(current_vm);
     });
 
     document.getElementById("upgrade-vm").addEventListener("click", function() {
@@ -79,21 +74,23 @@ function select_vm(id) {
     current_vm = id;
  }
 
-function start_vm(id) {
+function start_vm(id) { 
     console.log("starting vm " + id);
     post("/startVM/" + id);
-    document.getElementById("start-vm").disabled = "true";
-    document.getElementById("stop-vm").disabled = "false";
+    document.getElementById("start-vm").disabled = true;
+    document.getElementById("stop-vm").disabled = false;
 }
 
 function stop_vm(id) {
-    console.log("stopping vm" + id);
+    console.log("stopping vm " + id);
     post("/stopVM/" + id);
+    document.getElementById("start-vm").disabled = true;
+    document.getElementById("stop-vm").disabled = true;
  }
 
 function delete_vm(id) {
     console.log("deleting vm" + id);
-    post("/deleteVM/" + id);
+    // Delete from table
 }
 
 function upgrade_vm(id) {
