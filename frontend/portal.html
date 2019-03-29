@@ -15,6 +15,16 @@
                 float: left;
             }
 
+            .right-thin {
+                width: 25%;
+                float: right;
+            }
+
+            .left-wide {
+                width: 75%;
+                float: left;
+            }
+
             #vm-table {
                 width: 100%;
                 table-layout: fixed;
@@ -33,10 +43,10 @@
 
     <body onload="init()">
 
-        <div id="vm-list" class="left">
+        <div id="vm-list" class="left-wide">
 
             <button id="new-vm">new-vm</button>
-            <div class="right" id="total-vm-usage">$90.01</div>
+            <div class="right" id="total-vm-usage">$0</div>
 
             <table id="vm-table">
                 <tr>
@@ -44,13 +54,14 @@
                     <td></td>
                     <td>status</td>
                     <td>configuration</td>
+                    <td>cost</td>
                     <td></td>
                 </tr>
             </table>
         </form>
         </div>
 
-        <div id="vm-config" class="right">
+        <div id="vm-config" class="right-thin">
             
             <button id="start-vm">start</button>
             <button id="stop-vm">stop</button>
@@ -59,7 +70,6 @@
             <button id="upgrade-vm">upgrade</button>
             <button id="downgrade-vm">downgrade</button>
             <br>
-            <div id="current-vm-usage">$13.37</div>
         
         </div>
 
