@@ -46,7 +46,7 @@ function init() {
         downgrade_vm(id);
     }, false);
 
-    setInterval(update_vm_prices, 1000);
+    // setInterval(update_vm_prices, 1000);
 }
 
 function string_to_html(html_string) {
@@ -57,7 +57,7 @@ function string_to_html(html_string) {
 
 function new_vm() {
     console.log("creating vm");
-    vm_id = parseInt(Math.random() * 10000)
+    vm_id = parseInt(Math.random() * 10000);
     vms[vm_id] = {
         id: vm_id,
         running_cost: 0,
@@ -71,11 +71,12 @@ function new_vm() {
             <td>config</td>\n
             <td id="vm-` + vm_id + `-usage">$0</td>\n
             <td>\n
-                <button id="select-vm-` + vm_id + `">select</button>\n
+                <button id="` + vm_id + `">select</button>\n
             </td>\n
         </tr>
     `));
-    document.getElementById("select-vm-" + vm_id).addEventListener("click", function(event) {
+    document.getElementById(vm_id).addEventListener("click", function(event) {
+        console.log(event.target.id);
         select_vm(parseInt(event.target.id));
     }, false)
 }
