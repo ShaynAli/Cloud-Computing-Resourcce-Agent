@@ -71,11 +71,11 @@ function new_vm() {
         <tr id="vm-` + id + `">\n
             <td>` + id + `</td>\n
             <td></td>\n
-            <td>status</td>\n
-            <td>config</td>\n
+            <td id="status-` + id + `">Stopped</td>\n
+            <td id="config-` + id + `">Level 1</td>\n
             <td id="vm-` + id + `-usage">$0</td>\n
             <td>\n
-                <button id="` + id + `">select</button>\n
+                <button id="` + id + `">Select VM</button>\n
             </td>\n
         </tr>
     `));
@@ -94,12 +94,15 @@ function select_vm(id) {
 function start_vm(id) {
     console.log("starting vm " + id);
     post("/startVM/" + id);
+    document.getElementById("status-" + id).innerHTML = "Started";
     document.getElementById("stop-vm").disabled = false;
     vms[id].cost = vm_min_cost;
 }
 
 function stop_vm(id) {
     console.log("stopping vm " + id);
+    document.getElementById("status-" + id).innerHTML = "Stopped";
+    document.getElementById("start-vm").disabled = true;
     post("/stopVM/" + id);
     vms[id].cost = 0;
  }
@@ -114,12 +117,38 @@ function delete_vm(id) {
 
 function upgrade_vm(id) {
     console.log("upgrading vm " + id);
+
+    if (vms[id].cost === 0) {
+        return;
+    }
+
+    let level = document.getElementById("config-" + id).innerHTML;
+    
+    if (level === "Level 1") {
+        document.getElementById("config-" + id).innerHTML = "Level 2";
+    }
+
+    if (level === "Level 2") {
+        document.getElementById("config-" + id).innerHTML = "Level 3";
+    }
+
     post("/upgradeVM/" + id);
     vms[id].cost = Math.min(vms[id].cost + 5, vm_max_cost);
 }
 
 function downgrade_vm(id) {
     console.log("downgrading vm " + id);
+
+    let level = document.getElementById("config-" + id).innerHTML;
+
+    if (level === "Level 3") {
+        document.getElementById("config-" + id).innerHTML = "Level 2";
+    }
+
+    if (level === "Level 2") {
+        document.getElementById("config-" + id).innerHTML = "Level 1";
+    }
+
     post("/downgradeVM/" + id);
     vms[id].cost = Math.max(vms[id].cost - 5, vm_min_cost);
 }
@@ -139,7 +168,7 @@ async function update_vm_prices() {
             // Ignore error (vm was deleted)
         }
     }
-    total_usage.innerHTML = "$" + total_cost;
+    total_usage.innerHTML = "TOTAL USAGE: $" + total_cost;
 }
 
 function post(path) {
