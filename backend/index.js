@@ -44,7 +44,7 @@ app.get('/portal', function(req, res) {
 });
 
 app.use('/portal', portal);         //sends the portal route
-app.use(express.static('/frontend/'));
+app.use(express.static('frontend'));
 
 
 // Configure app to use Body Parser
