@@ -101,20 +101,20 @@ function stop_vm(id) {
  }
 
 function delete_vm(id) {
-    console.log("deleting vm" + id);
+    console.log("deleting vm " + id);
     document.getElementById("vm-" + id).remove();
     current_vm = -1;
     vm_config.style.visibility = "hidden";
 }
 
 function upgrade_vm(id) {
-    console.log("upgrading vm" + id);
+    console.log("upgrading vm " + id);
     post("/upgradeVM/" + id);
     vms[vm_id].cost = Math.min(vms[vm_id].cost + 5, vm_max_cost);
 }
 
 function downgrade_vm(id) {
-    console.log("downgrading vm" + id);
+    console.log("downgrading vm " + id);
     post("/downgradeVM/" + id);
     vms[vm_id].cost = Math.max(vms[vm_id].cost - 5, vm_min_cost);
 }
