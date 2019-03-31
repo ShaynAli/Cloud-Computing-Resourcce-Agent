@@ -7,8 +7,56 @@ var Event = require('../classes/event.js');
 var nodeMailer = require('nodemailer');
 var fs = require('fs');
 
-
+let myEmail = 'se4455test@gmail.com';
 var password = 'cloudcomp123!';
+
+let transport = nodeMailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: myEmail,
+        pass: password
+    }
+});
+
+
+function logEntry(eventType){
+        
+    let data = eventType + " has occurred";
+    
+    fs.appendFile("cloudLogFile.txt", data, function(err, data) {
+        
+    if (err) {
+        console.log(err);
+        throw err;
+    }
+        console.log("Successfully Written to File.");
+
+        let message = {
+            from: myEmail,
+            to: 'whenlin@uwo.ca',
+            subject: 'Message sent from Cloud Usage Monitor',
+            text: 'Message attached',
+            attachments: [
+                {
+                    path: './cloudLogFile.txt'
+                }
+            ]
+        };
+
+        transport.sendMail(message, function(err){
+            if(err){
+                console.log(err);
+                throw err;
+            } else {
+                console.log('Email sent!' + message);
+            }
+        });
+
+    });
+    
+    
+
+}
 
 
 // DATABASE SETUP
@@ -354,21 +402,6 @@ router.route('/downgradeVM/:_id')
         }
         
         return vm;
-    }
-    
-    function logEntry(eventType){
-        
-        var data = eventType + " has occurred";
-        
-        fs.appendFile("cloudLogFile.txt", data, function(err, data) {
-            
-        if (err) {
-            console.log(err);
-            throw err;
-        }
-            console.log("Successfully Written to File.");
-        });
-        
     }
     
     
