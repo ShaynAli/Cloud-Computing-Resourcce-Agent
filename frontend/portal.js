@@ -57,25 +57,25 @@ function string_to_html(html_string) {
 
 function new_vm() {
     console.log("creating vm");
-    vm_id = parseInt(Math.random() * 10000);
-    vms[vm_id] = {
-        id: vm_id,
+    let id = parseInt(Math.random() * 10000);
+    vms[id] = {
+        id: id,
         running_cost: 0,
         cost: 0
     }
     vm_table.appendChild(string_to_html(`
-        <tr id="vm-` + vm_id + `">\n
-            <td>` + vm_id + `</td>\n
+        <tr id="vm-` + id + `">\n
+            <td>` + id + `</td>\n
             <td></td>\n
             <td>status</td>\n
             <td>config</td>\n
-            <td id="vm-` + vm_id + `-usage">$0</td>\n
+            <td id="vm-` + id + `-usage">$0</td>\n
             <td>\n
-                <button id="` + vm_id + `">select</button>\n
+                <button id="` + id + `">select</button>\n
             </td>\n
         </tr>
     `));
-    document.getElementById(vm_id).addEventListener("click", function(event) {
+    document.getElementById(id).addEventListener("click", function(event) {
         console.log(event.target.id);
         select_vm(parseInt(event.target.id));
     }, false)
@@ -91,13 +91,13 @@ function start_vm(id) {
     console.log("starting vm " + id);
     post("/startVM/" + id);
     document.getElementById("stop-vm").disabled = false;
-    vms[vm_id].cost = vm_min_cost;
+    vms[id].cost = vm_min_cost;
 }
 
 function stop_vm(id) {
     console.log("stopping vm " + id);
     post("/stopVM/" + id);
-    vms[vm_id].cost = 0;
+    vms[id].cost = 0;
  }
 
 function delete_vm(id) {
@@ -110,26 +110,26 @@ function delete_vm(id) {
 function upgrade_vm(id) {
     console.log("upgrading vm " + id);
     post("/upgradeVM/" + id);
-    vms[vm_id].cost = Math.min(vms[vm_id].cost + 5, vm_max_cost);
+    vms[id].cost = Math.min(vms[id].cost + 5, vm_max_cost);
 }
 
 function downgrade_vm(id) {
     console.log("downgrading vm " + id);
     post("/downgradeVM/" + id);
-    vms[vm_id].cost = Math.max(vms[vm_id].cost - 5, vm_min_cost);
+    vms[id].cost = Math.max(vms[id].cost - 5, vm_min_cost);
 }
 
 async function update_vm_prices() {
     console.log("updating vm prices");
     var total_cost = 0;
-    for (const vm_id in vms) {
-        vm = vms[vm_id];
+    for (const id in vms) {
+        vm = vms[id];
         per_s_cost = vm.cost / 60.0;
         vm.running_cost += per_s_cost;
         total_cost += vm.running_cost;
         console.log(vm)
         try {
-            document.getElementById("vm-" + vm_id + "-usage").innerHTML = "$" + vm.running_cost;
+            document.getElementById("vm-" + id + "-usage").innerHTML = "$" + vm.running_cost;
         } catch (e) {
             // Ignore error (vm was deleted)
         }
