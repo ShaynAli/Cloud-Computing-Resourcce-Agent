@@ -11,7 +11,7 @@ function init() {
 
 function login(username, password, form) {
     if (username.toUpperCase() === true_username && password === true_password || (username == "test" && password == "1234")) {
-        window.location.href = "./portal.html";
+        window.location.href = "./portal";
         console.log("Logged in");
     } else {
         console.log("Error");
