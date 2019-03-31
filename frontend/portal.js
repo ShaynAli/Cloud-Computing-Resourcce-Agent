@@ -22,12 +22,29 @@ function init() {
 
     vm_config.style.visibility = "hidden";
 
-    new_vm_button.addEventListener("click", new_vm, false);
-    start_vm_button.addEventListener("click", start_vm, false);
-    stop_vm_button.addEventListener("click", stop_vm, false);
-    delete_vm_button.addEventListener("click", delete_vm, false);
-    upgrade_vm_button.addEventListener("click", upgrade_vm, false);
-    downgrade_vm_button.addEventListener("click", downgrade_vm, false);
+    new_vm_button.addEventListener("click", function(event) {
+        new_vm();
+    }, false);
+    start_vm_button.addEventListener("click", function(event) {
+        let id = current_vm;
+        start_vm(id);
+    }, false);
+    stop_vm_button.addEventListener("click", function(event) {
+        let id = current_vm;
+        stop_vm(id);
+    }, false);
+    delete_vm_button.addEventListener("click", function(event) {
+        let id = current_vm;
+        delete_vm(id);
+    }, false);
+    upgrade_vm_button.addEventListener("click", function(event) {
+        let id = current_vm;
+        upgrade_vm(id);
+    }, false);
+    downgrade_vm_button.addEventListener("click", function(event) {
+        let id = current_vm;
+        downgrade_vm(id);
+    }, false);
 
     setInterval(update_vm_prices, 1000);
 }
@@ -38,7 +55,7 @@ function string_to_html(html_string) {
     return template.content.cloneNode(true);
 }
 
-function new_vm() {  
+function new_vm() {
     console.log("creating vm");
     vm_id = parseInt(Math.random() * 10000)
     vms[vm_id] = {
@@ -58,48 +75,42 @@ function new_vm() {
             </td>\n
         </tr>
     `));
-    document.getElementById("select-vm-" + vm_id).addEventListener("click", function() {
-        select_vm(vm_id);
-    })
+    document.getElementById("select-vm-" + vm_id).addEventListener("click", function(event) {
+        select_vm(parseInt(event.target.id));
+    }, false)
 }
 
-function select_vm(vm_id) {
-    var id = vm_id;
+function select_vm(id) {
     console.log("selecting vm " + id);
     vm_config.style.visibility = "visible";
     current_vm = id;
  }
 
-function start_vm(evt) {
-    var id = current_vm;
+function start_vm(id) {
     console.log("starting vm " + id);
     post("/startVM/" + id);
     document.getElementById("stop-vm").disabled = false;
     vms[vm_id].cost = vm_min_cost;
 }
 
-function stop_vm(evt) {
-    var id = current_vm;
+function stop_vm(id) {
     console.log("stopping vm " + id);
     post("/stopVM/" + id);
     vms[vm_id].cost = 0;
  }
 
-function delete_vm(evt) {
-    var id = current_vm;
+function delete_vm(id) {
     console.log("deleting vm" + id);
     document.getElementById("vm-" + id).remove();
 }
 
-function upgrade_vm(evt) {
-    var id = current_vm;
+function upgrade_vm(id) {
     console.log("upgrading vm" + id);
     post("/upgradeVM/" + id);
     vms[vm_id].cost = Math.min(vms[vm_id].cost + 5, vm_max_cost);
 }
 
-function downgrade_vm(evt) {
-    var id = current_vm;
+function downgrade_vm(id) {
     console.log("downgrading vm" + id);
     post("/downgradeVM/" + id);
     vms[vm_id].cost = Math.max(vms[vm_id].cost - 5, vm_min_cost);
