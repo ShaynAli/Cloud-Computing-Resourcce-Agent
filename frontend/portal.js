@@ -114,7 +114,11 @@ async function update_vm_prices() {
         vm.running_cost += per_s_cost;
         total_cost += vm.running_cost;
         console.log(vm)
-        document.getElementById("vm-" + vm_id + "-usage").innerHTML = "$" + vm.running_cost;
+        try {
+            document.getElementById("vm-" + vm_id + "-usage").innerHTML = "$" + vm.running_cost;
+        } catch (e) {
+            // Ignore error (vm was deleted)
+        }
     }
     total_usage.innerHTML = "$" + total_cost;
 }
