@@ -2,7 +2,6 @@ var current_vm = -1;
 var vm_table, vm_list, vm_config;
 var new_vm_button, start_vm_button, stop_vm_button, delete_vm_button, upgrade_vm_button, downgrade_vm_button;
 var vms = {};
-// var vm_costs = {};
 var vm_min_cost = 5;
 var vm_max_cost = 15;
 
@@ -22,10 +21,6 @@ function init() {
     downgrade_vm_button = document.getElementById("downgrade-vm");
 
     vm_config.style.visibility = "hidden";
-    // stop_vm_button.disabled = true;
-
-    // TODO: Store VM state and update button states in select_vm when a differetn VM is selected
-    // TODO: Updated state and configuration of selected vm
 
     new_vm_button.addEventListener("click", new_vm, false);
     start_vm_button.addEventListener("click", start_vm, false);
@@ -45,26 +40,6 @@ function string_to_html(html_string) {
 
 function new_vm() {  
     console.log("creating vm");
-    // post("/createVM/").then(function (response) {
-    //     var vm_id = response["VM"];
-    //     console.log("Got VM id: " + vm_id)
-    //     vm_table.appendChild(string_to_html(`
-    //         <tr id="vm-` + vm_id + `">\n
-    //             <td>` + vm_id + `</td>\n
-    //             <td></td>\n
-    //             <td>status</td>\n
-    //             <td>config</td>\n
-    //             <td id="vm-` + vm_id + `-usage">$0</td>\n
-    //             <td>\n
-    //                 <button id="select-vm-` + vm_id + `">select</button>\n
-    //             </td>\n
-    //         </tr>
-    //     `));
-    //     document.getElementById("select-vm-" + vm_id).addEventListener("click", function() {
-    //         select_vm(vm_id);
-    //     })
-    //     vm_costs[vm_id] = 0;
-    // });
     vm_id = parseInt(Math.random() * 10000)
     vms[vm_id] = {
         id: vm_id,
@@ -98,7 +73,7 @@ function select_vm(evt) {
 function start_vm(evt) {
     var id = current_vm;
     console.log("starting vm " + id);
-    post_to("/startVM/" + id);
+    post("/startVM/" + id);
     document.getElementById("stop-vm").disabled = false;
     vms[vm_id].cost = vm_min_cost;
 }
@@ -106,7 +81,7 @@ function start_vm(evt) {
 function stop_vm(evt) {
     var id = current_vm;
     console.log("stopping vm " + id);
-    post_to("/stopVM/" + id);
+    post("/stopVM/" + id);
     vms[vm_id].cost = 0;
  }
 
@@ -119,28 +94,20 @@ function delete_vm(evt) {
 function upgrade_vm(evt) {
     var id = current_vm;
     console.log("upgrading vm" + id);
-    post_to("/upgradeVM/" + id);
+    post("/upgradeVM/" + id);
     vms[vm_id].cost = Math.min(vms[vm_id].cost + 5, vm_max_cost);
 }
 
 function downgrade_vm(evt) {
     var id = current_vm;
     console.log("downgrading vm" + id);
-    post_to("/downgradeVM/" + id);
+    post("/downgradeVM/" + id);
     vms[vm_id].cost = Math.max(vms[vm_id].cost - 5, vm_min_cost);
 }
 
 async function update_vm_prices() {
     console.log("updating vm prices");
     var total_cost = 0;
-    // for (const vm_id in vm_costs) {
-    //     await post("/currentCharges/" + vm_id).then(function(response) {
-    //         console.log(response);
-    //         var vm_cost = response["currentTotalCharges"];
-    //         document.getElementById("vm-" + vm_id + "-usage").innerHTML = "$" + vm_cost;
-    //         total_cost += vm_cost;
-    //     });
-    // }
     for (const vm_id in vms) {
         vm = vms[vm_id];
         per_s_cost = vm.cost / 60.0;
@@ -150,21 +117,6 @@ async function update_vm_prices() {
         document.getElementById("vm-" + vm_id + "-usage").innerHTML = "$" + vm.running_cost;
     }
     total_usage.innerHTML = "$" + total_cost;
-}
-
-function post_to(path, params, method) {
-    return;
-
-    var url = "https://cloud-computing-backend-gyoung52.c9users.io:8080/portal" + path;
-
-    return fetch(url, {
-        method: "POST",
-        headers: new Headers({
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        }) 
-    })
-    .then(response => response.json());
 }
 
 function post(path, params, method) {
