@@ -46,7 +46,7 @@ function init() {
         downgrade_vm(id);
     }, false);
 
-    // setInterval(update_vm_prices, 1000);
+    setInterval(update_vm_prices, 1000);
 }
 
 function string_to_html(html_string) {
