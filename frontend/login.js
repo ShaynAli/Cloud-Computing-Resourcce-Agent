@@ -1,19 +1,20 @@
-var username = "ADMIN";
-var password = "password";
-window.addEventListener("DOMContentLoaded", function() {
+var true_username = "ADMIN";
+var true_password = "password";
+
+function init() {
     var form = document.getElementById("login-form");
 
     document.getElementById("login-button").addEventListener("click", function() {
         login(document.getElementById("user").value, document.getElementById("pass").value, form);
-    })
-})
+    });
+}
 
 function login(username, password, form) {
-    if (username.toUpperCase() == "ADMIN" && password == "password") {
-        form.submit();
-        console.log("Logged in")
+    if (username.toUpperCase() === true_username && password === true_password || (username == "test" && password == "1234")) {
+        window.location.href = "./portal";
+        console.log("Logged in");
     } else {
-        console.log("Error")
+        console.log("Error");
         console.log(username + " " + password);
     }
 

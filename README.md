@@ -1,5 +1,3 @@
-# Cloud-Computing-Resourcce-Agent
+# Cloud-Computing-Resource-Agent
 
-```
-$ node backend/index.js
-```
+To run server: `$ node backend/index.js`

@@ -4,32 +4,27 @@
 
     <head>
 
-        <title>SE 4455 - Assignment 2</title>
+        <title>Admin Login</title>
 
         <meta charset="utf-8" lang="en">
         <meta name="description" content="login page">
         <meta name="author" content="Shayaan, Connor, Brandon, Willian">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel="icon" type="image/ico" sizes="16x16" href="favicon.ico">
-        <link rel="icon" type="image/ico" sizes="32x32" href="favicon-32.ico">
-        <link rel="icon" type="image/png" sizes="196x196" href="favicon-196.ico">
-
         <link rel="stylesheet" type="text/css" href="style.css">
-        <script src="login.js"></script>
+        <script type="text/javascript" src="./login.js"></script>
 
     </head>
 
-    <body>
-        <script src="login.js"></script>
-        <form id="login-form" action="/login.js" method="post">
+    <body onload="init();">
+        <div id="login-form">
             Username: <br>      
             <input type="text" name="username" id="user" required><br>
             Password: <br>
             <input type="password" name="password" id="pass" required><br><br> 
 
             <button id="login-button" style="width:148px">Login</button>
-        </form>
+        </div>
 
     </body>
 

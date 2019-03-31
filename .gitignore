@@ -36,6 +36,13 @@ build/Release
 node_modules/
 jspm_packages/
 
+# Package locks
+package-lock.json
+backend/package-lock.json
+
+# Data
+backend/app/data/
+
 # TypeScript v1 declaration files
 typings/
 
@@ -78,3 +85,10 @@ typings/
 
 # DynamoDB Local files
 .dynamodb/
+
+# DB files
+.0
+.ns
+
+# Gitkeep
+!**.gitkeep
