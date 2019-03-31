@@ -13,7 +13,7 @@ var password = 'cloudcomp123!';
 
 // DATABASE SETUP
     var mongoose   = require('mongoose');
-    mongoose.connect('mongodb://localhost:27017/vmData'); // connect to our database
+    mongoose.connect('mongodb://10.0.0.7:27017/vmData'); // connect to our database
     
     // Handle the connection event
     var db = mongoose.connection;

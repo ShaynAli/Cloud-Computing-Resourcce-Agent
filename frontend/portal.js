@@ -173,7 +173,7 @@ async function update_vm_prices() {
 
 function post(path) {
 
-    var url = "https://cloud-computing-backend-gyoung52.c9users.io:8080/portal" + path;
+    var url = "https://52.170.216.187:8080/portal" + path;
 
     return fetch(url, {
         method: "POST",
