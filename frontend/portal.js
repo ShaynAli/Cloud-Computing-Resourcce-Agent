@@ -63,8 +63,8 @@ function new_vm() {
     })
 }
 
-function select_vm(evt) {
-    var id = current_vm;
+function select_vm(vm_id) {
+    var id = vm_id;
     console.log("selecting vm " + id);
     vm_config.style.visibility = "visible";
     current_vm = id;
