@@ -56,8 +56,12 @@ function string_to_html(html_string) {
 }
 
 function new_vm() {
-    console.log("creating vm");
     let id = parseInt(Math.random() * 10000);
+    post("/createVM").then(function(response) {
+        id = response["VM"];
+        return response;
+    })
+    console.log("creating vm " + id);
     vms[id] = {
         id: id,
         running_cost: 0,
@@ -167,7 +171,7 @@ async function update_vm_prices() {
     total_usage.innerHTML = "TOTAL USAGE: $" + total_cost;
 }
 
-function post(path, params, method) {
+function post(path) {
 
     var url = "https://cloud-computing-backend-gyoung52.c9users.io:8080/portal" + path;
 
