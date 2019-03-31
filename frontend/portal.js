@@ -103,6 +103,8 @@ function stop_vm(id) {
 function delete_vm(id) {
     console.log("deleting vm" + id);
     document.getElementById("vm-" + id).remove();
+    current_vm = -1;
+    vm_config.style.visibility = "hidden";
 }
 
 function upgrade_vm(id) {
